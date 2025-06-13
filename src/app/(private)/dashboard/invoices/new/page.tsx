@@ -1,12 +1,19 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeftCircle, Trash2Icon } from "lucide-react";
 import { redirect } from "next/navigation";
 import React, { useState } from "react";
 
+type InvoiceItem = {
+  description: string;
+  quantity: number;
+  unitPrice: number;
+};
+
 export default function NewInvoicePage() {
-  const [items, setItems] = useState([
+  const [items, setItems] = useState<InvoiceItem[]>([
     { description: "", quantity: 1, unitPrice: 0 },
   ]);
 
@@ -14,9 +21,19 @@ export default function NewInvoicePage() {
     setItems([...items, { description: "", quantity: 1, unitPrice: 0 }]);
   };
 
-  const updateItem = (index, key, value) => {
+  const updateItem = <K extends keyof InvoiceItem>(
+    index: number,
+    key: K,
+    value: InvoiceItem[K]
+  ): void => {
     const newItems = [...items];
     newItems[index][key] = value;
+    setItems(newItems);
+  };
+
+  const removeItem = (index: number) => {
+    const newItems = [...items];
+    newItems.splice(index, 1);
     setItems(newItems);
   };
 
@@ -39,6 +56,7 @@ export default function NewInvoicePage() {
           <ArrowLeftCircle className="size-10" />
         </Button>
       </div>
+
       <div className="max-w-5xl mt-6 mx-auto container p-6">
         <h2 className="text-primary text-center md:text-4xl font-bold mb-8">
           Créer votre facture rapidement et efficacement
@@ -137,7 +155,10 @@ export default function NewInvoicePage() {
                       {(item.quantity * item.unitPrice).toFixed(2)}
                     </td>
                     <td className="flex items-center justify-center h-12">
-                      <Trash2Icon className="size-8 cursor-pointer text-red-500" />
+                      <Trash2Icon
+                        className="size-6 cursor-pointer text-red-500"
+                        onClick={() => removeItem(i)}
+                      />
                     </td>
                   </tr>
                 ))}

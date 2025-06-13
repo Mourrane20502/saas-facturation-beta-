@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { SignOutButton, useUser } from "@clerk/nextjs";
-import { FileText, LogOut, PlusCircle, Settings, Users2 } from "lucide-react";
+import { FileText, LogOut, Settings, Users2 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
