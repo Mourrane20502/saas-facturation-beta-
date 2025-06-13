@@ -41,9 +41,9 @@ export default function HomePageForm() {
       need: "facturation",
     },
   });
-
   const onSubmit = (values: z.infer<typeof schema>) => {
-    toast.success("Form Submitted");
+    console.log("Submitted values:", values);
+    toast.success("Formulaire soumis avec succès !");
   };
 
   return (
